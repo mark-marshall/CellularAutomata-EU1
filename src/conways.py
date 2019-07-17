@@ -19,19 +19,9 @@ screen = pygame.display.set_mode(size)
 automata = [0] * (SQ_NUM * SQ_NUM)
 
 # Assign Random Values to our Automata
-# rowx:
-#     col:
-#         automata[row * SQ_NUM + col] = set to a random number
-
-# for i in range(SQ_NUM * SQ_NUM):
-#     automata[i] = random.randint(0, 1)
-
 for row in range(SQ_NUM):
     for col in range(SQ_NUM):
         automata[row * SQ_NUM + col] = random.randint(0, 1)
-
-
-# Update State ( Add Rules to update each cell based on it's previous state )
 
 # Create a new automata for the next state
 new_automata = [0] * (SQ_NUM * SQ_NUM)
@@ -41,12 +31,30 @@ for i in range(len(automata)):
     dead = 8
 
     # look at neighbors
-    # (8 if conditions)
-    if i - 1 >= 0 and automata[i - 1]:
+    # Left
+    if (i - 1) >= 0 and automata[i - 1]:
         live += 1
-    if i + 1 < (SQ_NUM * SQ_NUM) and automata[i + 1]:
+    # Right
+    if (i + 1) < (SQ_NUM * SQ_NUM) and automata[i + 1]:
         live += 1
-    # TODO: the other neighbours
+    # Up
+    if (i - SQ_NUM) >= 0 and automata[i - SQ_NUM]:
+        live += 1
+    # Down
+    if (i + SQ_NUM) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM]:
+        live += 1
+    # Left Up
+    if (i - SQ_NUM - 1) >= 0 and automata[i - SQ_NUM - 1]:
+        live += 1
+    # Left Dowm
+    if (i + SQ_NUM - 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM -1]:
+        live += 1
+    # Right UP
+    if (i - SQ_NUM + 1) >= 0 and automata[i - SQ_NUM + 1]:
+        live += 1
+    # Right Down
+    if (i + SQ_NUM + 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM + 1]:
+        live += 1
 
     # Update State
     # if there are less than 2 living neighbors the cell dies
@@ -57,14 +65,8 @@ for i in range(len(automata)):
         new_automata[i] = 1
     # TODO: 3 more conditions
 
-
 # swap the data for the next generations data
 automata = new_automata
-
-
-
-
-
 
 # Add a title
 pygame.display.set_caption("Conway's Game of Life")

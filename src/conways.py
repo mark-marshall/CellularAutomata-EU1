@@ -59,15 +59,22 @@ for i in range(len(automata)):
     # Assign final number for dead neighbours value
     dead = 8 - live
 
-    # Update State
-    # if there are less than 2 living neighbors the cell dies
-    if automata[i] and live < 2:
+    # Death: a "live" cell with a single neighbor will "die"
+    if automata[i] and live == 1:
         new_automata[i] = 0
-    # if alive and has less than 4 neighbors then cell carrys on living
-    elif automata[i] and live < 4:
+    # Death: a "live" cell with 4+ live neighbors will "die"
+    elif automata[i] and live >= 4:
+        new_automata[i] = 0
+    # Life: a "live" cell with exactly 2 or 3 live neighbors will "stay alive"
+    elif automata[i] and ((live == 2) or (live == 3)):
         new_automata[i] = 1
-    # TODO: 3 more conditions
-
+    # Birth: a "dead" cell with exactly 3 live neighbors will "come to life"
+    elif not automata[i] and live == 3:
+        new_automata[i] = 1
+    # If none of the above conditions are met, cell should stay "dead"
+    else:
+        new_automata[i] = 0
+        
 # swap the data for the next generations data
 automata = new_automata
 

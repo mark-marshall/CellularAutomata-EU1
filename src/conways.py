@@ -44,10 +44,9 @@ while not done:
     new_automata = [0] * (SQ_NUM * SQ_NUM)
 
     for i in range(len(automata)):
+        # Initliaze an int of live neighbours
         live = 0
-        dead = 8
-
-        # look at neighbors
+        # Check status of neighbours
         # Left
         if (i - 1) >= 0 and automata[i - 1]:
             live += 1
@@ -72,10 +71,8 @@ while not done:
         # Right Down
         if (i + SQ_NUM + 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM + 1]:
             live += 1
-    
-        # Assign final number for dead neighbours value
-        dead = 8 - live
 
+        # Update state based on game rules
         # Death: a "live" cell with a single neighbor will "die"
         if automata[i] and live == 1:
             new_automata[i] = 0

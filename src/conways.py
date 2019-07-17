@@ -55,6 +55,9 @@ for i in range(len(automata)):
     # Right Down
     if (i + SQ_NUM + 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM + 1]:
         live += 1
+    
+    # Assign final number for dead neighbours value
+    dead = 8 - live
 
     # Update State
     # if there are less than 2 living neighbors the cell dies

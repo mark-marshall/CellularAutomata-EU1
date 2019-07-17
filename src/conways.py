@@ -85,7 +85,7 @@ while not done:
         # Birth: a "dead" cell with exactly 3 live neighbors will "come to life"
         elif not automata[i] and live == 3:
             new_automata[i] = 1
-        # If none of the above conditions are met, cell should stay "dead"
+        # If none of the above conditions are met, cell is "dead" and shouly stay "dead"
         else:
             new_automata[i] = 0
 
@@ -97,7 +97,7 @@ while not done:
     # Here, we clear the screen to gray. Don't put other drawing commands
     # above this, or they will be erased with this command.
     screen.fill(GRAY)
-    automata[12] = 1
+
     # --- Drawing code should go here
     # pygame.draw.rect(screen, RED, pygame.Rect(20, 20, 20, 20))
     y = MARGIN

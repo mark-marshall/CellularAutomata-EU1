@@ -23,61 +23,6 @@ for row in range(SQ_NUM):
     for col in range(SQ_NUM):
         automata[row * SQ_NUM + col] = random.randint(0, 1)
 
-# Create a new automata for the next state
-new_automata = [0] * (SQ_NUM * SQ_NUM)
-
-for i in range(len(automata)):
-    live = 0
-    dead = 8
-
-    # look at neighbors
-    # Left
-    if (i - 1) >= 0 and automata[i - 1]:
-        live += 1
-    # Right
-    if (i + 1) < (SQ_NUM * SQ_NUM) and automata[i + 1]:
-        live += 1
-    # Up
-    if (i - SQ_NUM) >= 0 and automata[i - SQ_NUM]:
-        live += 1
-    # Down
-    if (i + SQ_NUM) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM]:
-        live += 1
-    # Left Up
-    if (i - SQ_NUM - 1) >= 0 and automata[i - SQ_NUM - 1]:
-        live += 1
-    # Left Dowm
-    if (i + SQ_NUM - 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM -1]:
-        live += 1
-    # Right UP
-    if (i - SQ_NUM + 1) >= 0 and automata[i - SQ_NUM + 1]:
-        live += 1
-    # Right Down
-    if (i + SQ_NUM + 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM + 1]:
-        live += 1
-    
-    # Assign final number for dead neighbours value
-    dead = 8 - live
-
-    # Death: a "live" cell with a single neighbor will "die"
-    if automata[i] and live == 1:
-        new_automata[i] = 0
-    # Death: a "live" cell with 4+ live neighbors will "die"
-    elif automata[i] and live >= 4:
-        new_automata[i] = 0
-    # Life: a "live" cell with exactly 2 or 3 live neighbors will "stay alive"
-    elif automata[i] and ((live == 2) or (live == 3)):
-        new_automata[i] = 1
-    # Birth: a "dead" cell with exactly 3 live neighbors will "come to life"
-    elif not automata[i] and live == 3:
-        new_automata[i] = 1
-    # If none of the above conditions are met, cell should stay "dead"
-    else:
-        new_automata[i] = 0
-        
-# swap the data for the next generations data
-automata = new_automata
-
 # Add a title
 pygame.display.set_caption("Conway's Game of Life")
  
@@ -95,9 +40,61 @@ while not done:
             done = True
  
     # --- Game logic should go here
-    
+    # Create a new automata for the next state
+    new_automata = [0] * (SQ_NUM * SQ_NUM)
 
- 
+    for i in range(len(automata)):
+        live = 0
+        dead = 8
+
+        # look at neighbors
+        # Left
+        if (i - 1) >= 0 and automata[i - 1]:
+            live += 1
+        # Right
+        if (i + 1) < (SQ_NUM * SQ_NUM) and automata[i + 1]:
+            live += 1
+        # Up
+        if (i - SQ_NUM) >= 0 and automata[i - SQ_NUM]:
+            live += 1
+        # Down
+        if (i + SQ_NUM) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM]:
+            live += 1
+        # Left Up
+        if (i - SQ_NUM - 1) >= 0 and automata[i - SQ_NUM - 1]:
+            live += 1
+        # Left Dowm
+        if (i + SQ_NUM - 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM -1]:
+            live += 1
+        # Right UP
+        if (i - SQ_NUM + 1) >= 0 and automata[i - SQ_NUM + 1]:
+            live += 1
+        # Right Down
+        if (i + SQ_NUM + 1) < (SQ_NUM * SQ_NUM) and automata[i + SQ_NUM + 1]:
+            live += 1
+    
+        # Assign final number for dead neighbours value
+        dead = 8 - live
+
+        # Death: a "live" cell with a single neighbor will "die"
+        if automata[i] and live == 1:
+            new_automata[i] = 0
+        # Death: a "live" cell with 4+ live neighbors will "die"
+        elif automata[i] and live >= 4:
+            new_automata[i] = 0
+        # Life: a "live" cell with exactly 2 or 3 live neighbors will "stay alive"
+        elif automata[i] and ((live == 2) or (live == 3)):
+            new_automata[i] = 1
+        # Birth: a "dead" cell with exactly 3 live neighbors will "come to life"
+        elif not automata[i] and live == 3:
+            new_automata[i] = 1
+        # If none of the above conditions are met, cell should stay "dead"
+        else:
+            new_automata[i] = 0
+
+    # swap the data for the next generations data
+    automata = new_automata
+
     # --- Screen-clearing code goes here
  
     # Here, we clear the screen to gray. Don't put other drawing commands

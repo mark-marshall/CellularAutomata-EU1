@@ -144,11 +144,18 @@ while not done:
     textRect.center = (stop_play_button.center[0], stop_play_button.center[1])
     screen.blit(text, textRect)
 
-    # Restart button
+    # Add Restart button
     restart_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(9 * BTN_SIZE + 40, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
     text = font.render("Restart", True, TXT_COLOUR)
     textRect = text.get_rect()
     textRect.center = (restart_button.center[0], restart_button.center[1])
+    screen.blit(text, textRect)
+    
+    # Add Generations display
+    generations_display = pygame.draw.rect(screen, GRAY, pygame.Rect(12 * BTN_SIZE + 50, WIN_SIZE + 10, 5 * BTN_SIZE, BTN_SIZE))
+    text = font.render(f"{generations} generations", True, BTN_COLOUR)
+    textRect = text.get_rect()
+    textRect.center = (generations_display.center[0], generations_display.center[1])
     screen.blit(text, textRect)
 
     # --- Go ahead and update the screen with what we've drawn.

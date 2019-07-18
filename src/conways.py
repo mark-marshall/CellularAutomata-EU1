@@ -48,7 +48,32 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
- 
+
+        # click event
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click_pos = pygame.mouse.get_pos()
+
+            # Increase the timestep
+            if inc_timestep_button.collidepoint(click_pos) and time_step < 20:
+                time_step += 1
+                print(f"{time_step}")
+            # Decrease the timestep
+            if dec_timestep_button.collidepoint(click_pos) and time_step > 1:
+                time_step -= 1
+                print(f"{time_step}")
+            # Stop/Start the sim
+            if stop_play_button.collidepoint(click_pos):
+                running = not running
+            # Reset the grid to a random automota
+            if restart_button.collidepoint(click_pos):
+                for row in range(SQ_NUM):
+                    for col in range(SQ_NUM):
+                        automata[row * SQ_NUM + col] = random.randint(0, 1)
+                # reset generations to 0
+                generations = 0
+                # reset time_step to 5
+                time_step = 5
+            
     # --- Game logic should go here
     # Create a new automata for the next state
     new_automata = [0] * (SQ_NUM * SQ_NUM)
@@ -100,7 +125,10 @@ while not done:
             new_automata[i] = 0
 
     # swap the data for the next generations data
-    automata = new_automata
+    if running:
+        automata = new_automata
+        # increment the generations number
+        generations += 1
 
     # --- Screen-clearing code goes here
  
@@ -161,8 +189,8 @@ while not done:
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
-    # --- Limit to 5 frames per second
-    clock.tick(5)
+    # --- Set to time_step
+    clock.tick(time_step)
  
 # Close the window and quit.
 pygame.quit()

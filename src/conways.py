@@ -12,7 +12,7 @@ SQ_NUM = 25
 WIN_SIZE = (SQ_NUM + 1) * MARGIN + SQ_NUM * SQ_LENGTH
 BTN_SIZE = 30
 
-# TODO: add some variables to track generations and speed of game start and stop etc
+# Variables to track generations and speed of game start and stop etc
 generations = 0
 time_step = 5
 running = True
@@ -20,15 +20,51 @@ running = True
 pygame.init()
  
 # Set the width and height of the screen [width, height]
-size = (WIN_SIZE, WIN_SIZE + BTN_SIZE + 20)
+size = (WIN_SIZE, WIN_SIZE + BTN_SIZE + 50)
 screen = pygame.display.set_mode(size)
 
 automata = [0] * (SQ_NUM * SQ_NUM)
 
+
+# Starting states
 # Assign Random Values to our Automata
 for row in range(SQ_NUM):
     for col in range(SQ_NUM):
         automata[row * SQ_NUM + col] = random.randint(0, 1)
+
+# Block
+# automata[25] = 1
+# automata[26] = 1
+# automata[25 + SQ_NUM] = 1
+# automata[26 + SQ_NUM] = 1
+
+# Blinker
+# automata[150] = 1
+# automata[151] = 1
+# automata[152] = 1
+
+# Tub
+# automata[251] = 1
+# automata[251 + (SQ_NUM * 2)] = 1
+# automata[251 + (SQ_NUM - 1)] = 1
+# automata[251 + (SQ_NUM + 1)] = 1
+
+# Boat
+# automata[400] = 1
+# automata[401] = 1
+# automata[400 + SQ_NUM] = 1
+# automata[401 + (SQ_NUM + 1)] = 1
+# automata[401 + (SQ_NUM * 2)] = 1
+
+# Beacon
+# automata[525] = 1
+# automata[526] = 1
+# automata[525 + SQ_NUM] = 1
+# automata[526 + SQ_NUM] = 1
+# automata[525 + 2 + (SQ_NUM * 2)] = 1
+# automata[526 + 2 + (SQ_NUM * 2)] = 1
+# automata[525 + 2 + (SQ_NUM * 3)] = 1
+# automata[526 + 2 + (SQ_NUM * 3)] = 1
 
 # Add a title
 pygame.display.set_caption("Conway's Game of Life")
@@ -56,11 +92,9 @@ while not done:
             # Increase the timestep
             if inc_timestep_button.collidepoint(click_pos) and time_step < 20:
                 time_step += 1
-                print(f"{time_step}")
             # Decrease the timestep
             if dec_timestep_button.collidepoint(click_pos) and time_step > 1:
                 time_step -= 1
-                print(f"{time_step}")
             # Stop/Start the sim
             if stop_play_button.collidepoint(click_pos):
                 running = not running

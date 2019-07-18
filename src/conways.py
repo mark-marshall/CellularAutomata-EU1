@@ -5,6 +5,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (25, 25, 25)
 BTN_COLOUR = (175, 203, 255)
+TXT_COLOUR = (14, 28, 54)
 MARGIN = 3
 SQ_LENGTH = 20
 SQ_NUM = 25
@@ -34,9 +35,6 @@ pygame.display.set_caption("Conway's Game of Life")
 
 # add font
 font = pygame.font.Font('freesansbold.ttf', 16)
-
-# Add button
-inc_timestep_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(10, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
  
 # Loop until the user clicks the close button.
 done = False
@@ -125,11 +123,32 @@ while not done:
             x += SQ_LENGTH + MARGIN
         y += SQ_LENGTH + MARGIN
 
-    # Update inc Timestep button
+    # Add inc Timestep faster button
     inc_timestep_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(10, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
-    text = font.render("Button", True, (14, 28, 54)) # TODO: change text in button and refactor colour
+    text = font.render("Go faster", True, TXT_COLOUR)
     textRect = text.get_rect()
     textRect.center = (inc_timestep_button.center[0], inc_timestep_button.center[1])
+    screen.blit(text, textRect)
+
+     # Add inc Timestep slower button
+    dec_timestep_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(3 * BTN_SIZE + 20, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
+    text = font.render("Go slower", True, TXT_COLOUR)
+    textRect = text.get_rect()
+    textRect.center = (dec_timestep_button.center[0], dec_timestep_button.center[1])
+    screen.blit(text, textRect)
+
+    # Add Stop/Play button
+    stop_play_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(6 * BTN_SIZE + 30, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
+    text = font.render("Stop / Play", True, TXT_COLOUR)
+    textRect = text.get_rect()
+    textRect.center = (stop_play_button.center[0], stop_play_button.center[1])
+    screen.blit(text, textRect)
+
+    # Restart button
+    restart_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(9 * BTN_SIZE + 40, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
+    text = font.render("Restart", True, TXT_COLOUR)
+    textRect = text.get_rect()
+    textRect.center = (restart_button.center[0], restart_button.center[1])
     screen.blit(text, textRect)
 
     # --- Go ahead and update the screen with what we've drawn.

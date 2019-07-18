@@ -4,16 +4,22 @@ import pygame, random
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (25, 25, 25)
-RED = (255, 0, 0)
+BTN_COLOUR = (175, 203, 255)
 MARGIN = 3
 SQ_LENGTH = 20
 SQ_NUM = 25
 WIN_SIZE = (SQ_NUM + 1) * MARGIN + SQ_NUM * SQ_LENGTH
+BTN_SIZE = 30
+
+# TODO: add some variables to track generations and speed of game start and stop etc
+generations = 0
+time_step = 5
+running = True
 
 pygame.init()
  
 # Set the width and height of the screen [width, height]
-size = (WIN_SIZE, WIN_SIZE)
+size = (WIN_SIZE, WIN_SIZE + BTN_SIZE + 20)
 screen = pygame.display.set_mode(size)
 
 automata = [0] * (SQ_NUM * SQ_NUM)
@@ -25,6 +31,12 @@ for row in range(SQ_NUM):
 
 # Add a title
 pygame.display.set_caption("Conway's Game of Life")
+
+# add font
+font = pygame.font.Font('freesansbold.ttf', 16)
+
+# Add button
+inc_timestep_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(10, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
  
 # Loop until the user clicks the close button.
 done = False
@@ -112,6 +124,13 @@ while not done:
             i += 1
             x += SQ_LENGTH + MARGIN
         y += SQ_LENGTH + MARGIN
+
+    # Update inc Timestep button
+    inc_timestep_button = pygame.draw.rect(screen, BTN_COLOUR, pygame.Rect(10, WIN_SIZE + 10, 3 * BTN_SIZE, BTN_SIZE))
+    text = font.render("Button", True, (14, 28, 54)) # TODO: change text in button and refactor colour
+    textRect = text.get_rect()
+    textRect.center = (inc_timestep_button.center[0], inc_timestep_button.center[1])
+    screen.blit(text, textRect)
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
